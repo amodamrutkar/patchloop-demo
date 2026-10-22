@@ -10,10 +10,8 @@ def health():
 @bp.route('/products')
 def products():
     category = request.args.get('category', '')
-    # Vulnerable SQL query (intentional)
-    sql = f"SELECT id, name, price FROM products WHERE category = '{category}' AND is_public = 1"
-    rows = current_app.db.execute(sql).fetchall()
-    # Convert rows to list of dicts
+    sql = "SELECT id, name, price FROM products WHERE category = ? AND is_public = 1"
+    rows = current_app.db.execute(sql, (category,)).fetchall()
     result = [{"id": row["id"], "name": row["name"], "price": row["price"]} for row in rows]
     return jsonify(result)
 
