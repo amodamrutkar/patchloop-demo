@@ -1,2 +1,3 @@
-SECRET_KEY = "dev-secret-123"
+import os
+SECRET_KEY = os.getenv("SECRET_KEY")
 DATABASE_PATH = "shop.db"
